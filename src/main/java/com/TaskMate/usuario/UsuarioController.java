@@ -1,8 +1,10 @@
 package com.TaskMate.usuario;
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 
 
 @RestController
@@ -14,11 +16,48 @@ public class UsuarioController {
             LoggerFactory.getLogger(UsuarioController.class);
 
     @Autowired
-    private UsuarioHelper userHelper;
+    private UsuarioServicio userHelper;
 
-    @GetMapping("/Users")
-    public void getUsers(){
-        userHelper.getUsuarios();
-        System.out.println("Llamado del stored procedure desde el controlador");
+    @GetMapping("/users")
+    public List<Usuario> getUsers(){
+        //userHelper.getUsuarios();
+
+        return userHelper.listUsers();
     }
+
+    @GetMapping("/userByEmail/{email}")
+    public ResponseEntity<Usuario> getUserByEmail(@PathVariable String email){
+        Usuario usuario = userHelper.findByEmail(email);
+        if ( usuario != null ) return ResponseEntity.ok(usuario);
+        else return null;
+
+    }
+
+    @PostMapping("/user/add")
+    public ResponseEntity<String> addUser(@RequestBody Usuario usuario){
+        Usuario usuario1 = userHelper.findByEmail(usuario.email);
+
+
+        if (usuario1 != null){
+            logger.warn("Usuario no creado, ya existe usuario con el mismo email");
+            return ResponseEntity.status(409).body("El correo ya está en uso");
+        } else {
+
+            userHelper.saveUser(usuario);
+            return ResponseEntity.ok("Usuario creado con éxito");
+        }
+
+    }
+    /*@PostMapping("/registrarUsuario")
+    public void registrarMultiplesUsuarios(){
+        GenerarUsuarioAleatorios userRandom = new GenerarUsuarioAleatorios();
+
+
+        for (int i = 0; i < 1000; i++) {
+            Usuario usuario = userRandom.getUserRandom();
+            userHelper.save(usuario);
+
+        }
+        logger.info("Usuario random");
+    }*/
 }

@@ -3,12 +3,9 @@ package com.TaskMate.usuario;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.simple.SimpleJdbcCall;
-import org.springframework.jdbc.object.StoredProcedure;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class UsuarioServicio implements IUsuarioServicio{
@@ -17,28 +14,27 @@ public class UsuarioServicio implements IUsuarioServicio{
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
-    UsuarioHelper usuarioHelper;
+    UsuarioRepositorio usuarioRepositorio;
 
     @Override
     public List<Usuario> listUsers() {
 
-        usuarioHelper.getUsuarios();
-
-        return null;
+        return usuarioRepositorio.findAll();
     }
 
     @Override
-    public Usuario findByEmail() {
-        return null;
+    public Usuario findByEmail(String email) {
+        return usuarioRepositorio.findByEmailOrderByNombre(email);
     }
 
     @Override
     public Usuario saveUser(Usuario usuario) {
+        this.usuarioRepositorio.save(usuario);
         return null;
     }
 
     @Override
-    public void deleteUser() {
-
+    public void deleteUser(Integer idUsuario) {
+        this.usuarioRepositorio.deleteById(idUsuario);
     }
 }
