@@ -73,7 +73,7 @@ public class GenerarUsuarioAleatorios {
             "@gmx.com",
             "@mail.com"
     );
-
+    /*
     public Usuario getUserRandom(){
         Usuario user = new Usuario();
         Random random = new Random();
@@ -163,6 +163,6 @@ public class GenerarUsuarioAleatorios {
         user.fecha_nacimiento = fechaNacimiento;
         return user;
     }
-
+*/
 
 }

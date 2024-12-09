@@ -11,9 +11,6 @@ import java.util.List;
 public class UsuarioServicio implements IUsuarioServicio{
 
     @Autowired
-    private JdbcTemplate jdbcTemplate;
-
-    @Autowired
     UsuarioRepositorio usuarioRepositorio;
 
     @Override

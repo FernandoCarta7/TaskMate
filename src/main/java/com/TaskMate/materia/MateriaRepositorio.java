@@ -1,4 +1,6 @@
 package com.TaskMate.materia;
 
-public class MateriaRepositorio {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface MateriaRepositorio extends JpaRepository<Materia,Integer> {
 }

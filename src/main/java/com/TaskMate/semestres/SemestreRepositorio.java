@@ -1,4 +1,6 @@
 package com.TaskMate.semestres;
 
-public class SemestreRepositorio {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface SemestreRepositorio  extends JpaRepository<Semestre, Integer> {
 }
